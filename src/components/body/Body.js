@@ -1,11 +1,15 @@
 import style from './Body.module.css'
 
-const Body = () => {
+const Body = ({ screen, handleClick }) => {
   return (
-    <section>
-      <p className={style.text}>Clique no botão abaixo para começar a jogar</p>
-      <button className={style.btn}>COMEÇAR JOGO</button>
-    </section>
+    <>
+      {screen === "begin" &&
+        <section>
+          <p className={style.text}>Clique no botão abaixo para começar a jogar</p>
+          <button className={style.btn} onClick={handleClick}>COMEÇAR JOGO</button>
+        </section>
+      }
+    </>
   )
 }
 
