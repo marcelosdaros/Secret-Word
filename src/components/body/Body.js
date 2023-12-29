@@ -9,6 +9,7 @@ const Body = ({ screen, description, buttonText, handleClick }) => {
     {tip: "vehicle", words: ["car", "helicopter", "airplane", "boat", "bus", "bicicle"]},
     {tip: "food", words: ["pasta", "pizza", "sushi", "barbecue", "spinach", "watermelon"]}
   ]
+  
   const [attempts, setAttempts] = useState(3)
   let numTip = Math.floor(Math.random()*3)
   let numWord = Math.floor(Math.random()*6)
