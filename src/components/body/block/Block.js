@@ -1,8 +1,8 @@
 import style from './Block.module.css'
 
-const Block = () => {
+const Block = ({ letter }) => {
   return (
-    <div>Block</div>
+    <div className={style.block}>Block</div>
   )
 }
 

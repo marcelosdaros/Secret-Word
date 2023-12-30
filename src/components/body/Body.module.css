@@ -11,6 +11,15 @@
   margin-bottom: 20px;
 }
 
+.block_area {
+  display: flex;
+  margin: auto;
+  max-width: 400px;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
 .btn {
   color: white;
   font-weight:900;

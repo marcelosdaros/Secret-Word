@@ -15,6 +15,8 @@ const Body = ({ screen, description, buttonText, handleClick }) => {
   let numWord = Math.floor(Math.random()*6)
   const tip = terms[numTip].tip
   const word = terms[numTip].words[numWord]
+  const letters = word.split('')
+  console.log(word)
 
   return (
     <section>
@@ -23,7 +25,11 @@ const Body = ({ screen, description, buttonText, handleClick }) => {
           <p className={style.text}>{description} {tip}</p>
           <p className={style.attempts}>You have {attempts} attempt(s) remaining</p>
           <div className={style.block_area}>
-            {/* word.foreach(letter) => <Block /> */}
+            {letters.map((character, index) => (
+              <Block 
+                key={index}
+              />
+            ))}
           </div>
         </div>
       }
