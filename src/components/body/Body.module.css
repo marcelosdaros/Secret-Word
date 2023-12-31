@@ -5,24 +5,9 @@
   margin-bottom: 20px;
 }
 
-.attempts {
-  color: white;
-  font-size: 1em;
-  margin-bottom: 20px;
-}
-
-.block_area {
-  display: flex;
-  margin: auto;
-  max-width: 400px;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
 .btn {
   color: white;
-  font-weight:900;
+  font-weight: 900;
   background-color: rgba(14, 157, 186, 0.8);
   border: 2px solid white;
   border-radius: 50px;

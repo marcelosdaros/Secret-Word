@@ -1,45 +1,28 @@
 import style from './Body.module.css'
-import { useState } from 'react'
-import Block from './block/Block'
+import Play from './play/Play'
 
-const Body = ({ screen, description, buttonText, handleClick }) => {
-  
-  const terms = [
-    {tip: "computer", words: ["keyboard", "mouse", "headset", "software", "hardware", "windows"]},
-    {tip: "vehicle", words: ["car", "helicopter", "airplane", "boat", "bus", "bicicle"]},
-    {tip: "food", words: ["pasta", "pizza", "sushi", "barbecue", "spinach", "watermelon"]}
-  ]
-  
-  const [attempts, setAttempts] = useState(3)
-  let numTip = Math.floor(Math.random()*3)
-  let numWord = Math.floor(Math.random()*6)
-  const tip = terms[numTip].tip
-  const word = terms[numTip].words[numWord]
-  const letters = word.split('')
-  console.log(word)
+const Body = ({ screen, description, buttonText, changeScreen }) => {
 
   return (
     <section>
       {screen === "play" && 
-        <div>
-          <p className={style.text}>{description} {tip}</p>
-          <p className={style.attempts}>You have {attempts} attempt(s) remaining</p>
-          <div className={style.block_area}>
-            {letters.map((character, index) => (
-              <Block 
-                key={index}
-              />
-            ))}
-          </div>
-        </div>
+        <Play
+          description={description}
+          changeScreen={changeScreen}
+        />
       }
       {screen === "begin" &&
-        <p className={style.text}>{description}</p>
+        <>
+          <p className={style.text}>{description}</p>
+          <button className={style.btn} onClick={changeScreen}>{buttonText} </button>
+        </>
       }
       {screen === "end" &&
-        <p className={style.text}>{description}</p>
+        <>
+          <p className={style.text}>{description}</p>
+          <button className={style.btn} onClick={changeScreen}>{buttonText} </button>
+        </>
       }
-      <button className={style.btn} onClick={handleClick}>{buttonText} </button>
     </section>
   )
 }

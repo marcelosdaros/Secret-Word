@@ -11,7 +11,7 @@ function App() {
   const [buttonText, setButtonText] = useState("START GAME")
   const [screen, setScreen] = useState(pages[0])
 
-  const handleClick = () => {
+  const changeScreen = () => {
     switch (screen) {
       case "begin":
         setTitle("Guess the word:")
@@ -45,7 +45,7 @@ function App() {
         screen={screen}
         description={description}
         buttonText={buttonText}
-        handleClick={handleClick}
+        changeScreen={changeScreen}
       />
     </div>
   );
