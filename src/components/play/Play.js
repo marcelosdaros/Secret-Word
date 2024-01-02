@@ -1,7 +1,7 @@
 import style from './Play.module.css'
-import Block from './block/Block'
+import Block from '../block/Block'
 
-const Play = ({ description, changeScreen, tip, attempts, letters, usedLetters, handleSubmit }) => {
+const Play = ({ description, tip, attempts, letters, incorrectUsedLetters, handleSubmit }) => {
 
   const validateInput = (e) => {
     e.target.value = 
@@ -10,7 +10,7 @@ const Play = ({ description, changeScreen, tip, attempts, letters, usedLetters, 
   }
 
   return (
-    <div>
+    <section>
       <p className={style.description}>{description} {tip}</p>
       <p className={style.text}>You have {attempts} attempt(s) remaining</p>
       <div className={style.block_area}>
@@ -21,18 +21,18 @@ const Play = ({ description, changeScreen, tip, attempts, letters, usedLetters, 
           />
         ))}
       </div>
-      <form onSubmit={handleSubmit}>
+      <form>
         <label>
           <p className={style.text}>Tente adivinhar uma letra da palavra:</p>
           <p className={style.input_wrapper}>
             <input type="text" id="letter" className={style.input} onChange={validateInput}/>
-            <input type="submit" className={style.btn} value="JOGAR!"/>
+            <button onClick={handleSubmit}>JOGAR!</button>
           </p>
         </label>
       </form>
       <p className={style.text}>Letras já utilizadas:</p>
-      <p className={style.text}>{usedLetters}</p>
-    </div>
+      <p className={style.text}>{incorrectUsedLetters}</p>
+    </section>
   )
 }
 
