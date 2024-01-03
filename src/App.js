@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
-import style from './App.module.css';
-import Header from './components/header/Header';
-import Begin from './components/begin/Begin';
-import Play from './components/play/Play';
+import { useEffect, useState } from 'react'
+import style from './App.module.css'
+import Header from './components/header/Header'
+import Begin from './components/begin/Begin'
+import Play from './components/play/Play'
 import End from './components/end/End'
+import WordWasFound from './components/useEffect/WordWasFound'
 
 function App() {
 
@@ -14,52 +15,75 @@ function App() {
     {tip: "food", words: ["PASTA", "PIZZA", "SUSHI", "BARBECUE", "SPINACH", "WATERMELON"]}
   ]
   const [title, setTitle] = useState("Secret Word")
-  const [description, setDescription] = useState("Click in below button to play the game")
-  const [buttonText, setButtonText] = useState("START GAME")
   const [screen, setScreen] = useState(pages[0])
-  
   const [attempts, setAttempts] = useState(3)
+  const [tip, setTip] = useState("")
+  const [word, setWord] = useState("")
+  const [letters, setLetters] = useState([])
+  const [usedLetters, setUsedLetters] = useState([])
   const [incorrectUsedLetters, setIncorrectUsedLetters] = useState("")
-  const [tip, setTip] = useState()
-  const [word, setWord] = useState()
-  const [usedLetters, setUsedLetters] = useState()
-  const [letters, setLetters] = useState()
+  const [score, setScore] = useState(0)
 
   const changeScreen = () => {
-    if (screen === "begin") {
-      setTitle("Guess the word:")
-      setDescription("Hint about the word:")
-      setButtonText("PLAY!")
-      const tipNumber = Math.floor(Math.random() * Object.keys(terms).length)
-      const wordNumber = Math.floor(Math.random() * Object.keys(terms[tipNumber].words).length)
-      setTip(terms[tipNumber].tip)
-      setWord(terms[tipNumber].words[wordNumber])
-      setLetters(word.split(""))
-      setScreen("play")
+    switch (screen) {
+      case "begin":
+        changeToPlay()
+        break
+      case "play":
+        changeToFinish()
+        break
+      case "end":
+        changeToBegin()
+        break
     }
-    else if (screen === "play") {
-      setTitle("Game over!")
-      setDescription("Your score:")
-      setButtonText("RESTART")
-      setScreen("end")
-    }
-    else {
-      setTitle("Secret Word")
-      setDescription("Click in below button to play the game")
-      setButtonText("START GAME")
-      setScreen("begin")
-    }
+  }
+
+  const changeToBegin = () => {
+    setScreen("begin")
+    setTitle("Secret Word")
+  }
+
+  const changeToPlay = () => {
+    setScreen("play")
+    setTitle("Guess the word:")
+    generateRandomWord()
+  }
+
+  const changeToFinish = () => {
+    setScreen("end")
+    setTitle("Game over!")
+  }
+
+  const generateRandomWord = () => {
+    const tipNumber = Math.floor(Math.random() * Object.keys(terms).length)
+    const wordNumber = Math.floor(Math.random() * Object.keys(terms[tipNumber].words).length)
+    const currentWord = terms[tipNumber].words[wordNumber]
+    setTip(terms[tipNumber].tip)
+    setWord(currentWord)
+    setLetters(currentWord.split(""))
+    console.log(currentWord)
+  }
+
+  const restartGame = () => {
+    setAttempts(3)
+    setUsedLetters([])
+    setIncorrectUsedLetters("")
+    changeToPlay()
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const letterInput = document.querySelector('#letter').value
-    const character = letterInput
+    let letterInput = document.querySelector('#letter')
+    const character = letterInput.value
 
+    letterInput.value = ''
     if (isValidCharacter(character)) {
       searchForCharacter(character)
-    }    
-    letterInput = ''
+      if (wordWasDiscovered()) {
+        setScore(score => score + 100)
+        restartGame()
+      }
+    }
   }
 
   const isValidCharacter = (char) => {
@@ -76,14 +100,13 @@ function App() {
   const searchForCharacter = (character) => {
     let noLetterFound = true
     let searchedForAllLetters = false
+    let lettersCopy = Array.from(letters)
 
     while (!searchedForAllLetters) {
-      const index = letters.findIndex((element) => element === character)
+      const index = lettersCopy.findIndex((element) => element === character)
       if (index !== -1) {
         document.getElementById(index).innerHTML = character
-        const newArray = letters.splice(index, 1, "-1")
-        setLetters(newArray)
-        console.log(letters)
+        lettersCopy.splice(index, 1, "-1")
         noLetterFound = false
       }
       else {
@@ -91,16 +114,18 @@ function App() {
       }
     }
     if (noLetterFound) {
-      const formattedIncorrectUsedLetters = incorrectUsedLetters + `${character} - `
-      setIncorrectUsedLetters(formattedIncorrectUsedLetters)
+      setIncorrectUsedLetters(incorrectUsedLetters => incorrectUsedLetters + `${character} - `)
       setAttempts(attempts => attempts-1)
     }
     setUsedLetters(usedLetters => [...usedLetters, character])
+    setLetters(lettersCopy)
   }
 
-  if (attempts === 0) {
-    setAttempts(3)
-    changeScreen()
+  const wordWasDiscovered = () => {
+    if (letters.filter((letter) => letter !== "-1").length === 1) {
+      return true
+    }
+    return false
   }
 
   return (
@@ -108,10 +133,9 @@ function App() {
       <Header
         title={title}
       />
-      {screen === "begin" && <Begin description={description} buttonText={buttonText} changeScreen={changeScreen}/>}
+      {screen === "begin" && <Begin changeScreen={changeScreen}/>}
       {screen === "play" && 
         <Play
-          description={description}
           tip={tip}
           attempts={attempts}
           letters={letters}
@@ -119,9 +143,9 @@ function App() {
           handleSubmit={handleSubmit}
         />
       }
-      {screen === "end" && <End description={description} buttonText={buttonText} changeScreen={changeScreen}/>}
+      {screen === "end" && <End changeScreen={changeScreen}/>}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

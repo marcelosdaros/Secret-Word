@@ -1,10 +1,10 @@
 import style from './End.module.css'
 
-const End = ( description, buttonText, changeScreen ) => {
+const End = ( changeScreen ) => {
   return (
     <section>
-      <p className={style.text}>{description}</p>
-      <button onClick={changeScreen}>{buttonText}</button>
+      <p className={style.text}>Your score: </p>
+      <button onClick={changeScreen}>RESTART</button>
     </section>
   )
 }
