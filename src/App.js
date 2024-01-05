@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
-import style from './App.module.css'
+import { useState, useRef, useEffect } from 'react'
 import Header from './components/header/Header'
 import Begin from './components/begin/Begin'
 import Play from './components/play/Play'
 import End from './components/end/End'
-import WordWasFound from './components/useEffect/WordWasFound'
 
 function App() {
 
@@ -19,10 +17,11 @@ function App() {
   const [attempts, setAttempts] = useState(3)
   const [tip, setTip] = useState("")
   const [word, setWord] = useState("")
-  const [letters, setLetters] = useState([])
+  const [letters, setLetters] = useState(['a'])
   const [usedLetters, setUsedLetters] = useState([])
   const [incorrectUsedLetters, setIncorrectUsedLetters] = useState("")
   const [score, setScore] = useState(0)
+  const inputRef = useRef(null)
 
   const changeScreen = () => {
     switch (screen) {
@@ -30,7 +29,7 @@ function App() {
         changeToPlay()
         break
       case "play":
-        changeToFinish()
+        changeToEnd()
         break
       case "end":
         changeToBegin()
@@ -46,10 +45,14 @@ function App() {
   const changeToPlay = () => {
     setScreen("play")
     setTitle("Guess the word:")
+    setAttempts(3)
+    setUsedLetters([])
+    setIncorrectUsedLetters("")
+    setScore(0)
     generateRandomWord()
   }
 
-  const changeToFinish = () => {
+  const changeToEnd = () => {
     setScreen("end")
     setTitle("Game over!")
   }
@@ -64,11 +67,13 @@ function App() {
     console.log(currentWord)
   }
 
-  const restartGame = () => {
-    setAttempts(3)
+  const recreateWord = () => {
     setUsedLetters([])
     setIncorrectUsedLetters("")
-    changeToPlay()
+    generateRandomWord()
+    document.querySelector(".block-area").childNodes.forEach((block) => {
+      block.innerHTML = ''
+    })
   }
 
   const handleSubmit = (event) => {
@@ -76,14 +81,11 @@ function App() {
     let letterInput = document.querySelector('#letter')
     const character = letterInput.value
 
-    letterInput.value = ''
     if (isValidCharacter(character)) {
       searchForCharacter(character)
-      if (wordWasDiscovered()) {
-        setScore(score => score + 100)
-        restartGame()
-      }
     }
+    letterInput.value = ''
+    inputRef.current.focus()
   }
 
   const isValidCharacter = (char) => {
@@ -121,12 +123,18 @@ function App() {
     setLetters(lettersCopy)
   }
 
-  const wordWasDiscovered = () => {
-    if (letters.filter((letter) => letter !== "-1").length === 1) {
-      return true
+  useEffect(() => {
+    if (attempts === 0) {
+      changeToEnd()
     }
-    return false
-  }
+  }, [attempts])
+
+  useEffect(() => {
+    if (letters.filter((letter) => letter !== "-1").length === 0) {
+      setScore(score => score + 100)
+      recreateWord()
+    }
+  }, [letters])
 
   return (
     <div className="App">
@@ -140,10 +148,11 @@ function App() {
           attempts={attempts}
           letters={letters}
           incorrectUsedLetters={incorrectUsedLetters}
+          inputRef={inputRef}
           handleSubmit={handleSubmit}
         />
       }
-      {screen === "end" && <End changeScreen={changeScreen}/>}
+      {screen === "end" && <End changeScreen={changeToBegin} score={score}/>}
     </div>
   )
 }

@@ -1,12 +1,12 @@
 import style from './Play.module.css'
 import Block from '../block/Block'
 
-const Play = ({ tip, attempts, letters, incorrectUsedLetters, handleSubmit }) => {
+const Play = ({ tip, attempts, letters, incorrectUsedLetters, inputRef, handleSubmit }) => {
 
   const validateInput = (e) => {
     e.target.value = 
     e.target.value
-      .replace(/\W|\d/g, '').substr(0, 1).toUpperCase();
+      .replace(/\W|\d/g, '').toUpperCase();
   }
 
   return (
@@ -25,7 +25,7 @@ const Play = ({ tip, attempts, letters, incorrectUsedLetters, handleSubmit }) =>
         <label>
           <p className={style.text}>Try to guess one letter of the word:</p>
           <p className={style.input_wrapper}>
-            <input type="text" id="letter" className={style.input} onChange={validateInput}/>
+            <input type="text" id="letter" className={style.input} maxLength='1' onChange={validateInput} ref={inputRef}/>
             <button onClick={handleSubmit}>PLAY!</button>
           </p>
         </label>

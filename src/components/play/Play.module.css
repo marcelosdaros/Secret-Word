@@ -19,6 +19,8 @@
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
+  border: 10px solid yellow;
+  padding: 20px;
 }
 
 .input_wrapper {
