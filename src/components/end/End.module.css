@@ -2,5 +2,12 @@
   color: white;
   font-size: 1.2em;
   padding: 0px 5px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+}
+
+@media screen and (min-width: 1450px) {
+  .text {
+    margin-bottom: 60px;
+    font-size: 1.4em;
+  }
 }

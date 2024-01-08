@@ -29,3 +29,9 @@ button:hover {
   cursor: pointer;
   background-color: rgba(4,48,111,1);
 }
+
+@media screen and (min-width: 750px) {
+  button {
+    font-size: 1.2em;
+  }
+}

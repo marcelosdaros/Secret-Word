@@ -38,3 +38,36 @@
     font-size: 1.3em;
     text-align: center;
   }
+
+@media screen and (min-width: 750px) {
+  .description, .text {
+    font-size: 1.3em;
+  }
+
+  .block_area {
+    max-width: 650px;
+  }
+}
+
+@media screen and (min-width: 1450px) {
+  .description, .text {
+    font-size: 1.4em;
+    margin-bottom: 30px;
+  }
+
+  .block_area {
+    margin-bottom: 30px;
+  }
+
+  .input_wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+    .input {
+      height: 60px;
+      width: 60px;
+    }
+}

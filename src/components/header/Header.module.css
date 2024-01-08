@@ -1,4 +1,12 @@
 .header {
+  font-size: 14px;
   margin: 40px;
   color: white;
+}
+
+@media screen and (min-width: 1450px) {
+  .header {
+    margin: 60px;
+    font-size: 1.4em;
+  }
 }

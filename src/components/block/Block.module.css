@@ -4,5 +4,12 @@
   background-color: white;
   border-radius: 10px;
   padding-top: 20px;
-  font-size: 1.4em;
+  font-size: 2.5em;
+}
+
+@media screen and (min-width: 1450px) {
+  .block {
+    height: 80px;
+    width: 80px;
+  }
 }
