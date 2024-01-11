@@ -3,7 +3,7 @@
   width: 60px;
   background-color: white;
   border-radius: 10px;
-  padding-top: 20px;
+  padding-top: 10px;
   font-size: 2.5em;
 }
 
@@ -11,5 +11,6 @@
   .block {
     height: 80px;
     width: 80px;
+    padding-top: 20px;
   }
 }

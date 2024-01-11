@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { terms } from './components/data/words'
 import Header from './components/header/Header'
 import Begin from './components/begin/Begin'
 import Play from './components/play/Play'
@@ -7,16 +8,10 @@ import End from './components/end/End'
 function App() {
 
   const pages = ["begin", "play", "end"]
-  const terms = [
-    {tip: "computer", words: ["KEYBOARD", "MOUSE", "HEADSET", "SOFTWARE", "HARDWARE", "WINDOWS"]},
-    {tip: "vehicle", words: ["CAR", "HELICOPTER", "AIRPLANE", "BOAT", "BUS", "BICICLE"]},
-    {tip: "food", words: ["PASTA", "PIZZA", "SUSHI", "BARBECUE", "SPINACH", "WATERMELON"]}
-  ]
   const [title, setTitle] = useState("Secret Word")
   const [screen, setScreen] = useState(pages[0])
-  const [attempts, setAttempts] = useState(3)
+  const [attempts, setAttempts] = useState(5)
   const [tip, setTip] = useState("")
-  const [word, setWord] = useState("")
   const [letters, setLetters] = useState(['a'])
   const [usedLetters, setUsedLetters] = useState([])
   const [incorrectUsedLetters, setIncorrectUsedLetters] = useState("")
@@ -34,6 +29,8 @@ function App() {
       case "end":
         changeToBegin()
         break
+      default:
+        changeToBegin()
     }
   }
 
@@ -45,7 +42,7 @@ function App() {
   const changeToPlay = () => {
     setScreen("play")
     setTitle("Guess the word:")
-    setAttempts(3)
+    setAttempts(5)
     setUsedLetters([])
     setIncorrectUsedLetters("")
     setScore(0)
@@ -57,24 +54,22 @@ function App() {
     setTitle("Game over!")
   }
 
-  const generateRandomWord = () => {
+  const generateRandomWord = useCallback(() => {
     const tipNumber = Math.floor(Math.random() * Object.keys(terms).length)
     const wordNumber = Math.floor(Math.random() * Object.keys(terms[tipNumber].words).length)
     const currentWord = terms[tipNumber].words[wordNumber]
     setTip(terms[tipNumber].tip)
-    setWord(currentWord)
     setLetters(currentWord.split(""))
-    console.log(currentWord)
-  }
+  }, [terms])
 
-  const recreateWord = () => {
+  const recreateWord = useCallback(() => {
     setUsedLetters([])
     setIncorrectUsedLetters("")
     generateRandomWord()
     document.querySelector(".block-area").childNodes.forEach((block) => {
       block.innerHTML = ''
     })
-  }
+  }, [generateRandomWord])
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -134,7 +129,7 @@ function App() {
       setScore(score => score + 100)
       recreateWord()
     }
-  }, [letters])
+  }, [letters, recreateWord])
 
   return (
     <div className="App">
