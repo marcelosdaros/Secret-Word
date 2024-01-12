@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { terms } from './components/data/words'
+import { terms } from './data/words'
 import Header from './components/header/Header'
 import Begin from './components/begin/Begin'
 import Play from './components/play/Play'
