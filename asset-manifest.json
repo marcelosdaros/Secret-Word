@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/react-gh-pages/static/css/main.67827202.css",
-    "main.js": "/react-gh-pages/static/js/main.c306cec0.js",
-    "static/js/787.916918b9.chunk.js": "/react-gh-pages/static/js/787.916918b9.chunk.js",
-    "index.html": "/react-gh-pages/index.html",
-    "main.67827202.css.map": "/react-gh-pages/static/css/main.67827202.css.map",
-    "main.c306cec0.js.map": "/react-gh-pages/static/js/main.c306cec0.js.map",
-    "787.916918b9.chunk.js.map": "/react-gh-pages/static/js/787.916918b9.chunk.js.map"
+    "main.css": "/Secret-Word/static/css/main.7e0d34a3.css",
+    "main.js": "/Secret-Word/static/js/main.ba01a827.js",
+    "static/js/787.916918b9.chunk.js": "/Secret-Word/static/js/787.916918b9.chunk.js",
+    "index.html": "/Secret-Word/index.html",
+    "main.7e0d34a3.css.map": "/Secret-Word/static/css/main.7e0d34a3.css.map",
+    "main.ba01a827.js.map": "/Secret-Word/static/js/main.ba01a827.js.map",
+    "787.916918b9.chunk.js.map": "/Secret-Word/static/js/787.916918b9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.67827202.css",
-    "static/js/main.c306cec0.js"
+    "static/css/main.7e0d34a3.css",
+    "static/js/main.ba01a827.js"
   ]
 }
